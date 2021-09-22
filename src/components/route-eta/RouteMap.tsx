@@ -49,6 +49,7 @@ interface RouteMapProps {
 interface RouteMapRef {
   initialCenter: GeoLocation;
   map?: LeafletMap;
+  currentStopCenter: GeoLocation;
   /**
    * last center that requested by map.flyTo() / map.setView()
    */
@@ -64,6 +65,7 @@ const RouteMap = ({ stops, stopIdx, onMarkerClick }: RouteMapProps) => {
   const { i18n } = useTranslation();
   const mapRef = useRef<RouteMapRef>({
     initialCenter: stops[stopIdx] ? stops[stopIdx].location : checkPosition(),
+    currentStopCenter: stops[stopIdx] ? stops[stopIdx].location : checkPosition(),
     center: stops[stopIdx] ? stops[stopIdx].location : checkPosition(),
     isFollow: false,
     stops: stops,
@@ -109,13 +111,16 @@ const RouteMap = ({ stops, stopIdx, onMarkerClick }: RouteMapProps) => {
       ...mapRef.current,
       map,
     };
+    const stopFollowingDeviceGeoLocation = () => {
+      mapRef.current = {
+        ...mapRef.current,
+        center: mapRef.current.currentStopCenter,
+        isFollow: false,
+      };
+    };
     map.on({
-      dragend: () => {
-        mapRef.current = {
-          ...mapRef.current,
-          isFollow: false,
-        };
-      },
+      dragend: stopFollowingDeviceGeoLocation,
+      dragstart: stopFollowingDeviceGeoLocation,
     });
     if (navigator.userAgent === "prerendering") {
       map.setView(mapRef.current.center, 11);

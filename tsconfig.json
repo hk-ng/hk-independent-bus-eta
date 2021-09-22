@@ -19,9 +19,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots": [ "./node_modules/@types", "./types"],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["*", "./types/*"]
+    }
   },
   "include": [
-    "src"
+    "src", "types/global.d.ts", "gatsby-node.ts"
   ]
 }

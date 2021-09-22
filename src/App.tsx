@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from "react";
+import { Router, Redirect } from "@reach/router";
 import loadable from "@loadable/component";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
@@ -6,39 +7,24 @@ import {
   MuiThemeProvider,
   unstable_createMuiStrictModeTheme as createMuiTheme,
 } from "@material-ui/core/styles";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-  Route,
-  useRouteMatch,
-} from "react-router-dom";
 import { Container, CssBaseline } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AppContext from "./AppContext";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import Home from "./pages/Home";
-import RouteEta from "./pages/RouteEta";
+import Home from "./_pages/Home";
+import RouteEta from "./_pages/RouteEta";
 import { SearchContextProvider } from "./SearchContext";
-const RouteBoard = loadable(() => import("./pages/RouteBoard"));
-const RouteSearch = loadable(() => import("./pages/RouteSearch"));
-const Settings = loadable(() => import("./pages/Settings"));
+const RouteBoard = loadable(() => import("./_pages/RouteBoard"));
+const RouteSearch = loadable(() => import("./_pages/RouteSearch"));
+const Settings = loadable(() => import("./_pages/Settings"));
 
-const PageSwitch = () => {
-  const { path } = useRouteMatch();
-  return (
-    <SearchContextProvider>
-      <Switch>
-        <Route path={`${path}/route/:id/:panel?`} component={RouteEta} />
-        <Route path={`${path}/settings`} component={Settings} />
-        <Route path={`${path}/board`} component={RouteBoard} />
-        <Route path={`${path}/search`} component={RouteSearch} />
-        <Route path={`${path}`} component={Home} />
-      </Switch>
-    </SearchContextProvider>
-  );
-};
+// Use a custom wrapper to prevent passing through DOM props
+// to a non-DOM element.
+function RouterComponent({ children }) {
+  // Shorthand of <React.Fragment>{children}</React.Fragment>
+  return <>{children}</>;
+}
 
 const App = () => {
   const { colorMode } = useContext(AppContext);
@@ -48,19 +34,25 @@ const App = () => {
   useStyles();
   return (
     <MuiThemeProvider theme={theme}>
-      <Container maxWidth="xs" disableGutters className={"AppContainer"}>
-        <Router>
-          <Route exact path="/">
-            <Redirect to="/zh" />
-          </Route>
-          <Route path="/:lang">
-            <CssBaseline />
-            <Header />
-            <PageSwitch />
-            <Footer />
-          </Route>
-        </Router>
-      </Container>
+      <CssBaseline />
+      <SearchContextProvider>
+        <Container maxWidth="xs" disableGutters className={"AppContainer"}>
+          <Router primary={false} component={RouterComponent}>
+            <Header default />
+          </Router>
+          <Router primary={false} component={RouterComponent}>
+            <Redirect from="/" to="/zh" noThrow />
+            <RouteEta path={`/:lang/route/:id/:panel?`} />
+            <Settings path={`/:lang/settings`} />
+            <RouteBoard path={`/:lang/board`} />
+            <RouteSearch path={`/:lang/search`} />
+            <Home path="/:lang" />
+          </Router>
+          <Router primary={false} component={RouterComponent}>
+            <Footer default />
+          </Router>
+        </Container>
+      </SearchContextProvider>
     </MuiThemeProvider>
   );
 };

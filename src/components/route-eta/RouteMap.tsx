@@ -16,6 +16,7 @@ import type { StopEntry } from "../../DbContext";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import { checkPosition, locationEqual } from "../../utils";
 import type { Map as LeafletMap } from "leaflet";
+import type { GeoLocation } from "../../typing";
 
 const SelfCircle = () => {
   const { geolocation, geoPermission } = useContext(AppContext);
@@ -208,8 +209,8 @@ const RouteMap = ({ stops, stopIdx, onMarkerClick }: RouteMapProps) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url={
             colorMode === "light"
-              ? process.env.REACT_APP_OSM_PROVIDER_URL
-              : process.env.REACT_APP_OSM_PROVIDER_URL_DARK
+              ? process.env.GATSBY_OSM_PROVIDER_URL
+              : process.env.GATSBY_OSM_PROVIDER_URL_DARK
           }
         />
         {stopMarkers}

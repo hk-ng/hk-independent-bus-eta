@@ -104,7 +104,7 @@ registerRoute(
   })
 );
 
-const maphost = process.env.REACT_APP_OSM_PROVIDER_HOST || "";
+const maphost = process.env.GATSBY_OSM_PROVIDER_HOST || "";
 const mapCacheStrategy = new CacheFirstCORS({
   cacheName: "map",
   plugins: [
@@ -204,8 +204,8 @@ self.addEventListener("message", (event) => {
   }
   if (event.data && event.data.type === "CHECK_VERSION") {
     const CIJobID =
-      process.env.REACT_APP_CI_JOB_ID !== undefined
-        ? process.env.REACT_APP_CI_JOB_ID
+      process.env.GATSBY_CI_JOB_ID !== undefined
+        ? process.env.GATSBY_CI_JOB_ID
         : "1";
     self.clients
       .matchAll({ includeUncontrolled: true, type: "window" })

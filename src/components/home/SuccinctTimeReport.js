@@ -5,7 +5,7 @@ import {
   ListItemText,
   Typography
 } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from '@reach/router'
 import { vibrate } from '../../utils'
 import { makeStyles } from '@material-ui/core/styles'
 import AppContext from '../../AppContext'
@@ -40,12 +40,12 @@ const SuccinctTimeReport = ({routeId} ) => {
   
   useStyles()
 
-  const history = useHistory()
+  const navigate = useNavigate()
   const handleClick = (e) => {
     e.preventDefault()
     vibrate(1)
     setTimeout(() => {
-      history.push(`/${i18n.language}/route/${routeId.toLowerCase()}`)
+      navigate(`/${i18n.language}/route/${routeId.toLowerCase()}`)
     }, 0)
   }
   

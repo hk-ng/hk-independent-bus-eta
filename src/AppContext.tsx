@@ -12,11 +12,7 @@ import DbContext from "./DbContext";
 import type { DatabaseContextValue } from "./DbContext";
 import { Workbox } from "workbox-window";
 import { produce, freeze, current } from "immer";
-
-interface GeoLocation {
-  lat: number;
-  lng: number;
-}
+import type { GeoLocation } from "./typing";
 
 type GeoPermission = "opening" | "granted" | "denied" | null;
 

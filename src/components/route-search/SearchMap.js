@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MapContainer, Marker, TileLayer, Polyline, Circle, useMap } from 'react-leaflet'
 import Leaflet from 'leaflet'
 import markerIcon2X from 'leaflet/dist/images/marker-icon-2x.png'
@@ -184,7 +184,7 @@ const SearchMap = ({routes, start, end, stopIdx, onMarkerClick}) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geolocation])
-
+  console.log(process.env)
   return (
     <Box className={"routeMap-mapContainer"}>
       <MapContainer 
@@ -203,7 +203,7 @@ const SearchMap = ({routes, start, end, stopIdx, onMarkerClick}) => {
           keepBuffer={10}
           updateWhenIdle={false}
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url={colorMode === "light" ? process.env.REACT_APP_OSM_PROVIDER_URL : process.env.REACT_APP_OSM_PROVIDER_URL_DARK}
+          url={colorMode === "light" ? process.env.GATSBY_OSM_PROVIDER_URL : process.env.GATSBY_OSM_PROVIDER_URL_DARK}
         />
         { 
           (routes || []).map((route, idx) => <BusRoute key={`route-${idx}`} route={route} lv={idx} stopIdx={stopIdx[idx]} onMarkerClick={onMarkerClick} />)

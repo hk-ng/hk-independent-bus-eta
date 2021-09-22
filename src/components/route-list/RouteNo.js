@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-const RouteNo = ({ routeNo, component, align }) => {
+const RouteNo = ({ routeNo, component = undefined, align = undefined }) => {
   useStyles()
   const [prefix, suffix] = routeNo.match(/[A-Z]+$/) ? [routeNo.slice(0,-1), routeNo.slice(-1)] : [routeNo, '']
   return (

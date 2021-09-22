@@ -213,12 +213,12 @@ export const getTileListURL = (
       return prev;
     }, [])
     .flatMap((entry) => [
-      process.env.REACT_APP_OSM_PROVIDER_URL.replaceAll("{s}", "a")
+      process.env.GATSBY_OSM_PROVIDER_URL.replaceAll("{s}", "a")
         .replaceAll("{x}", String(entry.x))
         .replaceAll("{y}", String(entry.y))
         .replaceAll("{z}", String(zoomLevel))
         .replaceAll("{r}", retinaDisplay ? "@2x" : ""),
-      process.env.REACT_APP_OSM_PROVIDER_URL_DARK.replaceAll("{s}", "a")
+      process.env.GATSBY_OSM_PROVIDER_URL_DARK.replaceAll("{s}", "a")
         .replaceAll("{x}", String(entry.x))
         .replaceAll("{y}", String(entry.y))
         .replaceAll("{z}", String(zoomLevel))

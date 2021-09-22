@@ -42,11 +42,13 @@ const RouteList = () => {
       </List>
     )
   }
-
+  console.log(itemData)
   return (
     <div className={"routeBoard-list"}>
       <AutoSizer>
-        {({height, width}) => (
+        {({height, width}) => {
+          console.log(height, width)
+          return (
           <FixedSizeList
             height={height * 0.98}
             itemCount={targetRouteList.length}
@@ -57,7 +59,7 @@ const RouteList = () => {
           >
             {RouteRow}
           </FixedSizeList>
-        )}
+        )}}
       </AutoSizer>
     </div>
   )

@@ -154,7 +154,7 @@ async function runPuppeteer(baseUrl, routes, dir) {
       page.setRequestInterception(true);
       page.on('request', (request) => {
         // block map loading
-        if (request.url().includes(process.env.REACT_APP_OSM_PROVIDER_HOST))
+        if (request.url().includes(process.env.GATSBY_OSM_PROVIDER_HOST))
           request.abort();
         else
           request.continue()

@@ -6,9 +6,10 @@ import SearchContext from '../SearchContext'
 import { useTranslation } from 'react-i18next'
 import AddressInput from '../components/route-search/AddressInput'
 import SearchResult from '../components/route-search/SearchResult'
-import SearchMap from '../components/route-search/SearchMap'
 import { fetchEtas } from 'hk-bus-eta'
 import { setSeoHeader, getDistance, vibrate } from '../utils'
+import loadable from '@loadable/component'
+const SearchMap = loadable(() => import('../components/route-search/SearchMap'));
 
 const RouteSearch = () => {
   const { t, i18n } = useTranslation()
